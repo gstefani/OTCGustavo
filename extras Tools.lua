@@ -1,14 +1,6 @@
 setDefaultTab("Tools")
 
--- Hold target
-local targetID = nil
--- escape when attacking will reset hold target
-onKeyPress(function(keys)
-    if keys == "Escape" and targetID then
-        targetID = nil
-    end
-end)
-
+-- Combo pot exp
 local macroName = ".:: Use With Delay ::."
 local items = {7439} -- always inside {}
 local wait = 1 -- minutes
@@ -28,25 +20,30 @@ macro(2000,macroName,function()
   delay((wait*2*1000))
 end)
 
-macro(100, ".:: Hold Target ::.", function()
-    -- if attacking then save it as target, but check pos z in case of marking by mistake on other floor
-    if target() and target():getPosition().z == posz() and not target():isNpc() then
-        targetID = target():getId()
-    elseif not target() then
-        -- there is no saved data, do nothing
-        if not targetID then return end
+-- Hold target // ESC Cancel
+macro(100, ".:: Hold Target [ESC Cancel] ::.", nil, function()
+  if g_game.isAttacking() 
+then
+ oldTarget = g_game.getAttackingCreature()
+  end
+  if (oldTarget and oldTarget:getPosition()) 
+then
+ if (not g_game.isAttacking() and getDistanceBetween(pos(), oldTarget:getPosition()) <= 8) then
 
-        -- look for target
-        for i, spec in ipairs(getSpectators()) do
-            local sameFloor = spec:getPosition().z == posz()
-            local oldTarget = spec:getId() == targetID
-            
-            if sameFloor and oldTarget then
-                attack(spec)
-            end
-        end
+if (oldTarget:getPosition().z == posz()) then
+        g_game.attack(oldTarget)
+      end
     end
-end) 
+  end
+end)
+
+onKeyDown(function(keys)
+ 
+if keys == "Escape" then
+    oldTarget = nil
+g_game.cancelAttack()
+  end
+end)
 
 -- Hotkeys parar Target e Cave
 hotkey("Insert", ".:: Toggle Target ::.", function()
@@ -71,13 +68,17 @@ warn("CaveBot OFF")
 end)
 
 -- Mystic defense e mystic kai
-local castBelowHp = 70
-macro(50, ".:: Mystic Defense ::.",  function()
-  if (hppercent() <= castBelowHp and not hasManaShield()) then
-    say('Mystic Defense')
-  end
-  if (hppercent() > castBelowHp and hasManaShield()) then
-      say('Mystic Kai')
+lblInfo= UI.Label("-- [[ Mystic Defense ]] --")
+local usarutamovita = 'Mystic Defense'
+local tirarutamovita = 'Mystic Kai'
+local hpbaixo = 70
+local hpalto = 80
+local mpbaixo = 30
+macro(1, ".:: Mystic Defense ::.", function()
+  if (hppercent() <= hpbaixo) and not hasManaShield() and (manapercent() >= mpbaixo) then
+    say(usarutamovita)
+elseif (hppercent() >= hpalto) and hasManaShield() or (manapercent() <= mpbaixo) and hasManaShield() then
+    say(tirarutamovita) 
   end
 end)
 
