@@ -20,31 +20,6 @@ macro(2000,macroName,function()
   delay((wait*2*1000))
 end)
 
--- Hold target // ESC Cancel
-macro(100, ".:: Hold Target [ESC Cancel] ::.", nil, function()
-  if g_game.isAttacking() 
-then
- oldTarget = g_game.getAttackingCreature()
-  end
-  if (oldTarget and oldTarget:getPosition()) 
-then
- if (not g_game.isAttacking() and getDistanceBetween(pos(), oldTarget:getPosition()) <= 8) then
-
-if (oldTarget:getPosition().z == posz()) then
-        g_game.attack(oldTarget)
-      end
-    end
-  end
-end)
-
-onKeyDown(function(keys)
- 
-if keys == "Escape" then
-    oldTarget = nil
-g_game.cancelAttack()
-  end
-end)
-
 -- Hotkeys parar Target e Cave
 hotkey("Insert", ".:: Toggle Target ::.", function()
 if TargetBot.isOff() then
@@ -67,21 +42,6 @@ CaveBot.setOff()
 warn("CaveBot OFF")
 end)
 
--- Mystic defense e mystic kai
-lblInfo= UI.Label("-- [[ Mystic Defense ]] --")
-local usarutamovita = 'Mystic Defense'
-local tirarutamovita = 'Mystic Kai'
-local hpbaixo = 70
-local hpalto = 80
-local mpbaixo = 30
-macro(1, ".:: Mystic Defense ::.", function()
-  if (hppercent() <= hpbaixo) and not hasManaShield() and (manapercent() >= mpbaixo) then
-    say(usarutamovita)
-elseif (hppercent() >= hpalto) and hasManaShield() or (manapercent() <= mpbaixo) and hasManaShield() then
-    say(tirarutamovita) 
-  end
-end)
-
 -- Swapar weapon de acordo com a distancia do alvo
 macro(10, ".:: Dist/Melee ::.",function()
   if not g_game.isAttacking() then return end
@@ -91,8 +51,8 @@ macro(10, ".:: Dist/Melee ::.",function()
             moveToSlot(13484, SlotLeft)
         end
   else
-        if (getLeft() and getLeft():getId() ~= 12622) or not getLeft() then
-            moveToSlot(12622, SlotLeft)
+        if (getLeft() and getLeft():getId() ~= 21687) or not getLeft() then
+            moveToSlot(21687, SlotLeft)
         end
     end
 end)
@@ -141,23 +101,6 @@ if player:getBlessings() == 0 then
     end)
 end
 
--- Abrir PMs em nova janela
-local privateTabs = addSwitch("openPMTabs", ".:: PM Tabs ::.", function(widget) widget:setOn(not widget:isOn()) storage.OpenPrivateTabs = widget:isOn() end, parent)
-privateTabs:setOn(storage.OpenPrivateTabs)
-
-onTalk(function(name, level, mode, text, channelId, pos)
-    if mode == 4 and privateTabs:isOn() then
-        local g_console = modules.game_console
-        local privateTab = g_console.getTab(name)
-        if privateTab == nil then
-            privateTab = g_console.addTab(name, true)
-            g_console.addPrivateText(g_console.applyMessagePrefixies(name, level, text), g_console.SpeakTypesSettings['private'], name, false, name)
-            playSound("/sounds/Private Message.ogg")
-        end
-        return
-    end
-end)
-
 -- Bugmap pelo mouse
 macro(1, ".:: Bug Map - Mouse ::.", function(m)
     --Made By VivoDibra#1182 
@@ -203,4 +146,4 @@ macro(1, '.:: Bug Map - WASD ::.', "F1", function()
  elseif modules.corelib.g_keyboard.isKeyPressed('q') and not consoleModule:isChatEnabled() then
   checkPos(-3, -3)
  end
-end) 
+end)
