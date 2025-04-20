@@ -20,28 +20,6 @@ macro(2000,macroName,function()
   delay((wait*2*1000))
 end)
 
--- Hotkeys parar Target e Cave
-hotkey("Insert", "Toggle Target", function()
-if TargetBot.isOff() then
-TargetBot.setOn()
-warn("TargetBot " .. (TargetBot.isOn() and 'On' or 'Off'))
-return end
-if TargetBot.isOn() then 
-TargetBot.setOff()
-warn("TargetBot " .. (TargetBot.isOn() and 'On' or 'Off'))
-return end
-end) 
-
-hotkey("Pageup", "ReturnCave", function()
-CaveBot.setOn()
-warn("CaveBot ON")
-end) 
-
-hotkey("Pagedown", "PauseCave", function()
-CaveBot.setOff()
-warn("CaveBot OFF")
-end)
-
 -- Swapar weapon de acordo com a distancia do alvo
 macro(10, "Dist/Melee",function()
   if not g_game.isAttacking() then return end
