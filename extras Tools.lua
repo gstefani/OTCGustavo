@@ -102,13 +102,10 @@ if player:getBlessings() == 0 then
 end
 
 -- Bugmap pelo mouse
-macro(1, "Bug Map - Mouse", function(m)
+macro(20, "Bug Map - Mouse", function(m)
     --Made By VivoDibra#1182 
     local tile = getTileUnderCursor()
     if not tile then return end
-    --if tile:getTopThing() == g_game.getLocalPlayer() then
-        --return m.setOff()
-    --end
 	if g_mouse.isPressed(7) then
     g_game.use(tile:getTopUseThing())
 	end
