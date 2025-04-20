@@ -1,7 +1,7 @@
 setDefaultTab("Tools")
 
 -- Combo pot exp
-local macroName = ".:: Use With Delay ::."
+local macroName = "Use With Delay"
 local items = {7439} -- always inside {}
 local wait = 1 -- minutes
 setDefaultTab("tools")
@@ -21,7 +21,7 @@ macro(2000,macroName,function()
 end)
 
 -- Hotkeys parar Target e Cave
-hotkey("Insert", ".:: Toggle Target ::.", function()
+hotkey("Insert", "Toggle Target", function()
 if TargetBot.isOff() then
 TargetBot.setOn()
 warn("TargetBot " .. (TargetBot.isOn() and 'On' or 'Off'))
@@ -32,18 +32,18 @@ warn("TargetBot " .. (TargetBot.isOn() and 'On' or 'Off'))
 return end
 end) 
 
-hotkey("Pageup", ".:: ReturnCave ::.", function()
+hotkey("Pageup", "ReturnCave", function()
 CaveBot.setOn()
 warn("CaveBot ON")
 end) 
 
-hotkey("Pagedown", ".:: PauseCave ::.", function()
+hotkey("Pagedown", "PauseCave", function()
 CaveBot.setOff()
 warn("CaveBot OFF")
 end)
 
 -- Swapar weapon de acordo com a distancia do alvo
-macro(10, ".:: Dist/Melee ::.",function()
+macro(10, "Dist/Melee",function()
   if not g_game.isAttacking() then return end
   target = g_game.getAttackingCreature()
     if getDistanceBetween(player:getPosition(), target:getPosition()) > 1 then
@@ -62,7 +62,7 @@ Turn = {}
 
 Turn.maxDistance = {x = 7, y = 7}
 Turn.minDistance = 1
-Turn.macro = macro(1, '.:: Turn by Ryan ::.', function()
+Turn.macro = macro(1, 'Turn by Ryan', function()
     local target = g_game.getAttackingCreature()
     if target then
         local targetPos = target:getPosition()
@@ -102,7 +102,7 @@ if player:getBlessings() == 0 then
 end
 
 -- Bugmap pelo mouse
-macro(1, ".:: Bug Map - Mouse ::.", function(m)
+macro(1, "Bug Map - Mouse", function(m)
     --Made By VivoDibra#1182 
     local tile = getTileUnderCursor()
     if not tile then return end
@@ -128,7 +128,7 @@ local function checkPos(x, y)
 end
 
 consoleModule = modules.game_console
-macro(1, '.:: Bug Map - WASD ::.', "F1", function() 
+macro(1, 'Bug Map - WASD', function() 
  if modules.corelib.g_keyboard.isKeyPressed('w') and not consoleModule:isChatEnabled() then
   checkPos(0, -5)
  elseif modules.corelib.g_keyboard.isKeyPressed('e') and not consoleModule:isChatEnabled() then
