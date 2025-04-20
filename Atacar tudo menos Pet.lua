@@ -2,13 +2,13 @@
 setDefaultTab("Cave")
 
 local monstrosIgnorados = {
-    '[sup] charmander', 
-    '[sup] squirtle',
-    '[sup] infernape',
-    '[sup] bulbasaur',
-    '[sup] pochita',
-    '[sup] pikachu',
-	'[sup] zoroark',
+	'charmander', 
+    	'squirtle',
+    	'infernape',
+    	'bulbasaur',
+    	'pochita',
+    	'pikachu',
+	'zoroark',
 }
 
 local distanciaMaxima = 6 -- Distância máxima para atacar os monstros
