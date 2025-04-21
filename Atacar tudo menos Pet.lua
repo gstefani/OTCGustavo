@@ -58,6 +58,7 @@ macro(100, "Atacar de CaveBot", "F1", function()
 
     -- Se não houver monstros válidos, religar o Cavebot e encerrar a função
     if #monstrosValidos == 0 then
+	CaveBot.delay(100)		
         CaveBot.setOn()
         return
     end
