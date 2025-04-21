@@ -2,7 +2,7 @@
 UI.Separator()
 
 -- Abrir BP principal
-macro(200, "Keep Open Main BP", function()
+macro(200, "Abrir Main BP", function()
     if not getContainers()[0] and getBack() then
         g_game.open(getBack())
     end
@@ -25,40 +25,6 @@ onKeyPress(function(keys)
     elseif keys == keyUp then
         lockedLevel = lockedLevel - 1
         modules.game_interface.getMapPanel():lockVisibleFloor(lockedLevel)
-    end
-end)
-
--- Combo pot exp
-local macroName = "Use With Delay"
-local items = {7439} -- always inside {}
-local wait = 1 -- minutes
-
-macro(2000,macroName,function()
-  local time = 0
-  for i=1,#items do
-    local id = items[i]
-    if findItem(id) then
-      schedule(time,function()
-        g_game.use(findItem(id))
-      end)
-      time = time + 250
-    end
-  end
-  delay((wait*2*1000))
-end)
-
--- Swapar weapon de acordo com a distancia do alvo
-macro(10, "Dist/Melee",function()
-  if not g_game.isAttacking() then return end
-  target = g_game.getAttackingCreature()
-    if getDistanceBetween(player:getPosition(), target:getPosition()) > 1 then
-        if (getLeft() and getLeft():getId() ~= 13484) or not getLeft() then
-            moveToSlot(13484, SlotLeft)
-        end
-  else
-        if (getLeft() and getLeft():getId() ~= 21687) or not getLeft() then
-            moveToSlot(21687, SlotLeft)
-        end
     end
 end)
 
