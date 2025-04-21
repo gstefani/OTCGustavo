@@ -1,3 +1,5 @@
+UI.Separator()
+
 local _combo = {
     spellCount = 6, -- quantidade de magias
 }
