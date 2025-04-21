@@ -1,4 +1,5 @@
 --setDefaultTab("Cave")
+UI.Separator()
 
 local monstrosIgnorados = {
 	'charmander', 
