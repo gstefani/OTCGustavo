@@ -1,0 +1,6 @@
+UI.Button("10 fps", function()
+ modules.client_options.setOption("backgroundFrameRate", 10)
+end)
+UI.Button("150 fps", function()
+ modules.client_options.setOption("backgroundFrameRate", 150)
+end)
