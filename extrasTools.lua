@@ -1,5 +1,3 @@
-setDefaultTab("Tools")
-
 -- Combo pot exp
 local macroName = "Use With Delay"
 local items = {7439} -- always inside {}
