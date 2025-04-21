@@ -1,5 +1,4 @@
--- Others tab
-setDefaultTab("Cave")
+--setDefaultTab("Cave")
 
 local monstrosIgnorados = {
 	'charmander', 
