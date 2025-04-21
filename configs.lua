@@ -8,7 +8,7 @@ local config = {
     regen_mana_by_item = false, -- se o teu regen de mana for por item, deixe true, se n, false
     regen_mana_id_item = 11863, -- item p regenerar mana
     percent_train_ml = 90, -- porcentagem que irá intercalar entre regenerar e treinar, < regen > train
-    spell_train = '', -- spell de treino
+    spell_train = 'powerdown', -- spell de treino
 }
 
 macro(100, "Mana Trainer Hunt", function()
