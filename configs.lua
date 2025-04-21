@@ -1,4 +1,4 @@
-setDefaultTab("Cave")
+--setDefaultTab("Others")
 UI.Separator()
 
 -- Combo pot exp
