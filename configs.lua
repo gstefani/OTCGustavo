@@ -1,6 +1,13 @@
 --setDefaultTab("Others")
 UI.Separator()
 
+-- Abrir BP principal
+macro(200, "Keep Open Main BP", function()
+    if not getContainers()[0] and getBack() then
+        g_game.open(getBack())
+    end
+end)
+
 -- Combo pot exp
 local macroName = "Use With Delay"
 local items = {7439} -- always inside {}
