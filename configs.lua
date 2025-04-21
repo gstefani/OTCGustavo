@@ -1,4 +1,5 @@
 setDefaultTab("Others")
+UI.separator();
 
 -- Combo pot exp
 local macroName = "Use With Delay"
