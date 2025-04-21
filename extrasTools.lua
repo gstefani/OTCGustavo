@@ -2,7 +2,6 @@
 local macroName = "Use With Delay"
 local items = {7439} -- always inside {}
 local wait = 1 -- minutes
-setDefaultTab("tools")
 
 macro(2000,macroName,function()
   local time = 0
