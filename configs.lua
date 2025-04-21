@@ -1,6 +1,31 @@
 --setDefaultTab("Others")
 UI.Separator()
 
+-- Parar CaveBot e TargetBot
+local stopTarget = true; -- se estiver true vai parar, se não, não.
+local stopCaveBot = true;-- se estiver true vai parar, se não, não.
+local sameZ = false; -- se estiver false vai contar players de z diferente, se não, não.
+
+macro(100, "Stop Cave/Target", function()
+    local playerPos = player:getPosition();
+    for _, spec in ipairs(getSpectators()) do
+        if ((spec ~= player) and spec:isPlayer()) then
+            local specPos = spec:getPosition();
+            if (((playerPos.z == specPos.z) and sameZ) or (not sameZ)) then
+                if stopTarget then
+                    TargetBot.setOff();
+                end
+                if stopCaveBot then
+                    CaveBot.setOff();
+                end
+                return;
+            end
+        end
+    end
+    TargetBot.setOn();
+    CaveBot.setOn();
+end);
+
 -- Abrir BP principal
 macro(200, "Abrir Main BP", function()
     if not getContainers()[0] and getBack() then
