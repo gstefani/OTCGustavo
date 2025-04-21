@@ -1,5 +1,6 @@
 UI.Separator()
-
+local lbT = UI.Label('Combo Spells');
+lbT:setColor('orange');
 local _combo = {
     spellCount = 6, -- quantidade de magias
 }
