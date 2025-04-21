@@ -1,6 +1,12 @@
 --setDefaultTab("Others")
 UI.Separator()
 
+-- Parar CaveBot
+hotkey("Insert", "PauseCave", function()
+CaveBot.setOff()
+warn("CaveBot OFF")
+end)
+
 -- Mana treiner hunt
 local config = {
     regen_mana_by_spell = false, -- se o teu regen de mana for por spell, deixe true, se n, false
