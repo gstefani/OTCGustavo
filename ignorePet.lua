@@ -39,7 +39,7 @@ local function updateTargetIfNecessary(monstro)
     return false
 end
 
-macro(100, "Atacar de CaveBot", "F1", function()
+macro(100, "Atacar de CaveBot", "Pageup", function()
     local posJogador = g_game.getLocalPlayer():getPosition()
     local monstros = g_map.getSpectators(posJogador, false)
     local monstrosValidos = {}
@@ -88,7 +88,7 @@ macro(100, "Atacar de CaveBot", "F1", function()
 end)
 
 
-macro(100, "Atacar Tudo", "F2", function()
+macro(100, "Atacar Tudo", "Pagedown", function()
     local posJogador = g_game.getLocalPlayer():getPosition()
     local monstros = g_map.getSpectators(posJogador, false)
     local monstrosValidos = {}
