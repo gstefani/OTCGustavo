@@ -7,6 +7,16 @@ CaveBot.setOff()
 warn("CaveBot OFF")
 end)
 
+-- Auto Buff
+local buffNameTextEdit = macro(100, function()
+    if hasPartyBuff() then return end
+    say(storage.buffName or "Power Up")
+end)
+addTextEdit("buffName", storage.buffName or "Power Up", function(widget, text)
+    storage.buffName = text
+end)
+
+
 -- Revide
 local macroName = "Revidar PK" -- macro name
 local pauseTarget = true -- pause targetbot
