@@ -8,7 +8,7 @@ warn("CaveBot OFF")
 end)
 
 -- Auto Buff
-local buffNameTextEdit = macro(100, function()
+local buffNameTextEdit = macro(100, "AutoBuff", function()
     if hasPartyBuff() then return end
     say(storage.buffName or "Power Up")
 end)
