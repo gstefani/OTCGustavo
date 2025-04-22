@@ -29,7 +29,7 @@ end
 comboMacro = macro(100, "Combo", _combo.logic)
 
 -- Criação do ícone para controlar o macro
-comboIcon = addIcon("comboToggle", {item = 5553, text = "Combo", hotkey = "F6"}, comboMacro)
+comboIcon = addIcon("comboToggle", {item = 26747, text = "Combo"}, comboMacro)
 comboIcon:breakAnchors()
 comboIcon:move(100, 50)
 
