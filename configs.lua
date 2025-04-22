@@ -7,6 +7,70 @@ CaveBot.setOff()
 warn("CaveBot OFF")
 end)
 
+-- Revide
+local macroName = "Revidar PK" -- macro name
+local pauseTarget = true -- pause targetbot
+local pauseCave = true -- pause cavebot
+local followTarget = false -- set chase mode to follow
+
+
+local st = "AutoRevide"
+storage[st] = storage[st] or {
+  pausedTarget = false,
+  pausedCave = false
+}
+local c = storage[st]
+local target = nil
+local m = macro(250,macroName, function()
+  if not target then
+    if c.pausedTarget then
+      c.pausedTarget = false
+      TargetBot.setOn()
+    end
+    if c.pausedCave then
+      c.pausedCave = false
+      CaveBot.setOn()
+    end
+    return
+  end
+
+  local creature = getPlayerByName(target)
+  if not creature then target = nil return end
+  if pauseTargetBot then
+    c.pausedTarget = true
+    TargetBot.setOff()
+  end
+  if pauseTarget then
+    c.pausedTarget = true
+    TargetBot.setOff()
+  end
+  if pauseCave then
+    c.pausedCave = true
+    CaveBot.setOff()
+  end
+
+  if followTarget then
+    g_game.setChaseMode(1)
+  end
+
+  if g_game.isAttacking() then
+    if g_game.getAttackingCreature():getName() == target then
+      return
+    end
+  end
+  g_game.attack(creature)
+end)
+
+onTextMessage(function(mode, text)
+  if m:isOff() then return end
+  if not text:find('hitpoints due to an attack by') then return end
+  local p = 'You lose (%d+) hitpoints due to an attack by (.+)%.'
+  local hp, attacker = text:match(p)
+  local c = getPlayerByName(attacker)
+  if not c then return end
+  target = c:getName()
+end)
+
 -- Mana treiner hunt
 local config = {
     regen_mana_by_spell = false, -- se o teu regen de mana for por spell, deixe true, se n, false
