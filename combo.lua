@@ -31,7 +31,6 @@ comboMacro = macro(100, "Combo", _combo.logic)
 -- Criação do ícone para controlar o macro
 comboIcon = addIcon("comboToggle", {item = 26747, text = "Combo"}, comboMacro)
 comboIcon:breakAnchors()
-comboIcon:move(100, 50)
 
 -- Inputs para combo de monstros
 UI.Label("Spells para monstros:"):setColor('orange')
