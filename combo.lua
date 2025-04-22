@@ -12,7 +12,7 @@ storage.uComboPlayers = storage.uComboPlayers or {}
 storage.uComboEnabled = storage.uComboEnabled or false
 
 -- Icone para ativar/desativar combo
-local comboIcon = addIcon("comboToggle", {icon="option.png", text="Combo", hotkey="Ctrl+K"})
+local comboIcon = addIcon("comboToggle", {item="26747", text="Combo"})
 comboIcon:setOn(storage.uComboEnabled)
 comboIcon.onClick = function(widget)
     storage.uComboEnabled = not storage.uComboEnabled
