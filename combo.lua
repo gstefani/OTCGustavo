@@ -1,32 +1,16 @@
 UI.Separator()
-local lbT = UI.Label('Combo Spells');
-lbT:setColor('orange');
+local lbT = UI.Label('Combo Spells')
+lbT:setColor('orange')
 
 local _combo = {
-    spellCount = 6, -- quantidade de magias para monstros
-    spellCountPlayers = 4 -- quantidade de magias para players
+    spellCount = 6, -- magias para monstros
+    spellCountPlayers = 4 -- magias para players
 }
 
 storage.uCombo = storage.uCombo or {}
 storage.uComboPlayers = storage.uComboPlayers or {}
-storage.uComboEnabled = storage.uComboEnabled or false
-
--- Icone para ativar/desativar combo
-local comboIcon = addIcon("comboToggle", {item="26747", text="Combo"})
-comboIcon:setOn(storage.uComboEnabled)
-comboIcon.onClick = function(widget)
-    storage.uComboEnabled = not storage.uComboEnabled
-    comboIcon:setOn(storage.uComboEnabled)
-    if storage.uComboEnabled then
-        comboIcon:setTooltip("Macro do combo ATIVADO")
-    else
-        comboIcon:setTooltip("Macro do combo DESATIVADO")
-    end
-end
 
 _combo.logic = function()
-    if not storage.uComboEnabled then return end -- só executa se estiver ativado
-
     local target = g_game.getAttackingCreature()
     if not target then return end
 
@@ -41,7 +25,13 @@ _combo.logic = function()
     end
 end
 
-_combo.macro = macro(100, "Combo", _combo.logic)
+-- Macro principal já é ativado/desativado pelo ícone
+comboMacro = macro(100, "Combo", _combo.logic)
+
+-- Criação do ícone para controlar o macro
+comboIcon = addIcon("comboToggle", {item = 5553, text = "Combo", hotkey = "F6"}, comboMacro)
+comboIcon:breakAnchors()
+comboIcon:move(100, 50)
 
 -- Inputs para combo de monstros
 UI.Label("Spells para monstros:"):setColor('orange')
