@@ -9,19 +9,32 @@ local _combo = {
 
 storage.uCombo = storage.uCombo or {}
 storage.uComboPlayers = storage.uComboPlayers or {}
+storage.uComboEnabled = storage.uComboEnabled or false
+
+-- Icone para ativar/desativar combo
+local comboIcon = addIcon("comboToggle", {icon="option.png", text="Combo", hotkey="Ctrl+K"})
+comboIcon:setOn(storage.uComboEnabled)
+comboIcon.onClick = function(widget)
+    storage.uComboEnabled = not storage.uComboEnabled
+    comboIcon:setOn(storage.uComboEnabled)
+    if storage.uComboEnabled then
+        comboIcon:setTooltip("Macro do combo ATIVADO")
+    else
+        comboIcon:setTooltip("Macro do combo DESATIVADO")
+    end
+end
 
 _combo.logic = function()
+    if not storage.uComboEnabled then return end -- só executa se estiver ativado
+
     local target = g_game.getAttackingCreature()
     if not target then return end
 
-    -- Verifica se o alvo é um player
     if target:isPlayer() then
-        -- Combo para players
         for index, spell in ipairs(storage.uComboPlayers) do
             if g_game.isAttacking() then say(spell) end
         end
     else
-        -- Combo para monstros
         for index, spell in ipairs(storage.uCombo) do
             if g_game.isAttacking() then say(spell) end
         end
