@@ -2,7 +2,7 @@
 UI.Separator()
 
 -- Parar CaveBot
-hotkey("Insert", "PauseCave", function()
+hotkey("Insert", function()
 CaveBot.setOff()
 warn("CaveBot OFF")
 end)
