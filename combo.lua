@@ -14,7 +14,7 @@ storage.uComboPlayers = storage.uComboPlayers or {}
 storage.comboMacroActive = storage.comboMacroActive or false
 
 -- Macro principal, roda só se o controle estiver ativo
-comboMacro = macro(100, "Combo", function()
+comboMacro = macro(100, function()
   if not storage.comboMacroActive then return end
   local target = g_game.getAttackingCreature()
   if not target then return end
