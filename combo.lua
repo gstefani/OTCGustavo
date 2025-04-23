@@ -10,29 +10,45 @@ local _combo = {
 storage.uCombo = storage.uCombo or {}
 storage.uComboPlayers = storage.uComboPlayers or {}
 
-_combo.logic = function()
-    local target = g_game.getAttackingCreature()
-    if not target then return end
+-- Variável de controle do macro (ativa/desativa)
+storage.comboMacroActive = storage.comboMacroActive or false
 
-    if target:isPlayer() then
-        for index, spell in ipairs(storage.uComboPlayers) do
-            if g_game.isAttacking() then say(spell) end
-        end
-    else
-        for index, spell in ipairs(storage.uCombo) do
-            if g_game.isAttacking() then say(spell) end
-        end
+-- Macro principal, roda só se o controle estiver ativo
+comboMacro = macro(100, function()
+  if not storage.comboMacroActive then return end
+  local target = g_game.getAttackingCreature()
+  if not target then return end
+  if target:isPlayer() then
+    for i, spell in ipairs(storage.uComboPlayers) do
+      if spell ~= "" and g_game.isAttacking() then say(spell) end
     end
-end
+  else
+    for i, spell in ipairs(storage.uCombo) do
+      if spell ~= "" and g_game.isAttacking() then say(spell) end
+    end
+  end
+end)
+comboMacro:setOn(storage.comboMacroActive)
 
--- Macro principal já é ativado/desativado pelo ícone
-comboMacro = macro(100, "Combo", _combo.logic)
+-- Ícone moveable e que mantém a posição após relogar
+local comboIcon = addIcon("comboToggle", {text="Combo\nSpells", switchable=false, moveable=true}, function()
+  storage.comboMacroActive = not storage.comboMacroActive
+  comboMacro:setOn(storage.comboMacroActive)
+end)
 
--- Criação do ícone para controlar o macro
-comboIcon = addIcon("comboToggle", {item = 26747, text = "Combo"}, comboMacro)
-comboIcon:breakAnchors()
+comboIcon:setSize({height=30, width=60})
+comboIcon.text:setFont('verdana-11px-rounded')
 
--- Inputs para combo de monstros
+-- Macro visual: muda a cor do texto ON/verde ou OFF/vermelho
+macro(50, function()
+  if storage.comboMacroActive then
+    comboIcon.text:setColoredText({"Combo\nSpells\n","white","ON","green"})
+  else
+    comboIcon.text:setColoredText({"Combo\nSpells\n","white","OFF","red"})
+  end
+end)
+
+-- Inputs para spells de monstros
 UI.Label("Spells para monstros:"):setColor('orange')
 for i = 1, _combo.spellCount do
     addTextEdit("id_monstro"..i, storage.uCombo[i] or "", function(self, text)
@@ -40,7 +56,7 @@ for i = 1, _combo.spellCount do
     end)
 end
 
--- Inputs para combo de players
+-- Inputs para spells de players
 UI.Label("Spells para players:"):setColor('red')
 for i = 1, _combo.spellCountPlayers do
     addTextEdit("id_player"..i, storage.uComboPlayers[i] or "", function(self, text)
