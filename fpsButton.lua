@@ -11,7 +11,7 @@ lbT:setColor('orange');
 
 ------------------------------------------------------
 local secondsToIdle = 5
-local activeFPS =  60
+local activeFPS =  120
 ---------------------------------------------------------
 
 local afkFPS = 0
