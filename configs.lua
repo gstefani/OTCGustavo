@@ -1,30 +1,6 @@
 --setDefaultTab("Others")
 UI.Separator()
 
--- Exp Hr Icon
-function comma_value(amount)
-  local formatted = amount
-  while true do  
-    formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", '%1,%2')
-    if (k==0) then
-      break
-    end
-  end
-  return formatted
-end
-
-local i_exp = nil
-i_exp = addIcon("expIcon", {item={id=112, count=1}, text="Enable For Exp/h"}, macro(100, function(m)
-  if player.expSpeed then
-    local expHour = comma_value(math.floor(player.expSpeed * 3600))
-    i_exp.text:setText(expHour.." exp/h")
-  else
-    i_exp.text:setText("Waiting Exp...")
-  end
-end))
-
-i_exp:setWidth(150)
-
 -- Aumentar tamanho do CaveBot List
 local size = 300
 CaveBot.actionList:getParent():setHeight(size)
