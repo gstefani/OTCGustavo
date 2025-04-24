@@ -1,6 +1,10 @@
 --setDefaultTab("Others")
 UI.Separator()
 
+-- Aumentar tamanho do CaveBot List
+local size = 300
+CaveBot.actionList:getParent():setHeight(size)
+
 -- Parar CaveBot
 hotkey("Insert", function()
 CaveBot.setOff()
