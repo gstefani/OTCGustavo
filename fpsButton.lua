@@ -10,7 +10,7 @@ lbT:setColor('orange');
 -- end)
 
 ------------------------------------------------------
-local secondsToIdle = 5
+local secondsToIdle = 30
 local activeFPS =  120
 ---------------------------------------------------------
 
