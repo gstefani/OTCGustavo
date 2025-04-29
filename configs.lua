@@ -20,7 +20,6 @@ addTextEdit("buffName", storage.buffName or "Power Up", function(widget, text)
     storage.buffName = text
 end)
 
-
 -- Revide
 local macroName = "Revidar PK" -- macro name
 local pauseTarget = true -- pause targetbot
