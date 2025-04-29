@@ -103,5 +103,3 @@ s.m_main = macro(200, "Energy Ring", function()
       s.equipItem(storage.ERing, storage.ERingEquipped, SlotFinger)
   end
 end)
-
-addSeparator()
