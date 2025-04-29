@@ -11,7 +11,7 @@ local monstrosIgnorados = {
 	    'zoroark',
 }
 
-local distanciaMaxima = 6 -- Distância máxima para atacar os monstros
+local distanciaMaxima = 7 -- Distância máxima para atacar os monstros
 local distanciaPrioridade = 2 -- Distância de alta prioridade (monstros mais próximos)
 local vidaMinimaPrioridade = 20 -- Vida mínima para priorizar um monstro (opcional)
 
