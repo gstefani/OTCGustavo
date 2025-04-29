@@ -2,13 +2,13 @@
 UI.Separator()
 
 local monstrosIgnorados = {
-	'charmander', 
+	    'charmander', 
     	'squirtle',
     	'infernape',
     	'bulbasaur',
     	'pochita',
     	'pikachu',
-	'zoroark',
+	    'zoroark',
 }
 
 local distanciaMaxima = 6 -- Distância máxima para atacar os monstros
