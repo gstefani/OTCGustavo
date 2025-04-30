@@ -94,9 +94,11 @@ macro(100, "Ataca Tudo", "Pagedown", function()
     local lowesthpc = 101
     
     for _, val in pairs(battlelist) do
-        if val:isMonster() and val:canShoot() and val:getHealthPercent() < lowesthpc then
+        if val:isMonster() and val:getHealthPercent() < lowesthpc then
             lowesthpc = val:getHealthPercent()
+            if val:canShoot() and not isInPz() and not isMonsterIgnored(val:getName():lower()) then
             target = val
+            end
         end
     end
     
