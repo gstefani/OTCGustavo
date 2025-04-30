@@ -88,45 +88,19 @@ macro(100, "Atacar de CaveBot", "Pageup", function()
 end)
 
 
-macro(100, "Atacar Tudo", "Pagedown", function()
-    local posJogador = g_game.getLocalPlayer():getPosition()
-    local monstros = g_map.getSpectators(posJogador, false)
-    local monstrosValidos = {}
-
-    -- Cria a lista de monstros válidos
-    for _, monstro in ipairs(monstros) do
-        local monstroName = monstro:getName():lower()
-        -- Verifica se o monstro é válido para ataque
-        if monstro:isMonster() 
-           and not isMonsterIgnored(monstroName) 
-           and getDistanceBetween(posJogador, monstro:getPosition()) <= distanciaMaxima
-           and monstro:canShoot() then
-            table.insert(monstrosValidos, monstro)
+macro(100, "Ataca Tudo", "Pagedown", function()
+    local battlelist = getSpectators()
+    local target = nil
+    local lowesthpc = 101
+    
+    for _, val in pairs(battlelist) do
+        if val:isMonster() and val:canShoot() and val:getHealthPercent() < lowesthpc then
+            lowesthpc = val:getHealthPercent()
+            target = val
         end
     end
-
-    -- Se não houver monstros válidos, encerra a função
-    if #monstrosValidos == 0 then
-        return
+    
+    if target and g_game.getAttackingCreature() ~= target then
+        g_game.attack(target)
     end
-
-    -- Ordena os monstros pela proximidade do jogador
-    table.sort(monstrosValidos, function(a, b)
-        return getDistanceBetween(posJogador, a:getPosition()) < getDistanceBetween(posJogador, b:getPosition())
-    end)
-
-    -- Tenta atacar o monstro prioritário ou mais próximo
-    for _, monstro in ipairs(monstrosValidos) do
-        local distanciaMonstro = getDistanceBetween(posJogador, monstro:getPosition())
-
-        -- Se o monstro estiver dentro da distância de prioridade, verifica o target
-        if distanciaMonstro <= distanciaPrioridade and not isInPz() then
-            if updateTargetIfNecessary(monstro) then
-                return
-            end
-        end
-    end
-
-    -- Caso não tenha encontrado nenhum monstro dentro da distância de prioridade, verifica o mais próximo
-    updateTargetIfNecessary(monstrosValidos[1])
 end)
