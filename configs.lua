@@ -5,11 +5,15 @@ UI.Separator()
 local size = 300
 CaveBot.actionList:getParent():setHeight(size)
 
+--------------------------------------------------------------------------------------------------------------------------
+
 -- Parar CaveBot
 hotkey("Insert", function()
 CaveBot.setOff()
 warn("CaveBot OFF")
 end)
+
+--------------------------------------------------------------------------------------------------------------------------
 
 -- Auto Buff
 macro(100, "AutoBuff", function()
@@ -19,6 +23,8 @@ end)
 addTextEdit("buffName", storage.buffName or "Power Up", function(widget, text)
     storage.buffName = text
 end)
+
+--------------------------------------------------------------------------------------------------------------------------
 
 -- Revide
 local macroName = "Revidar PK" -- macro name
@@ -84,6 +90,8 @@ onTextMessage(function(mode, text)
   target = c:getName()
 end)
 
+--------------------------------------------------------------------------------------------------------------------------
+
 -- Mana treiner hunt
 local config = {
     regen_mana_by_spell = false, -- se o teu regen de mana for por spell, deixe true, se n, false
@@ -107,6 +115,8 @@ macro(100, "Mana Trainer Hunt", function()
         end
     end
 end)
+
+--------------------------------------------------------------------------------------------------------------------------
 
 -- ICON Ligar e Desligar CaveBot/TargetBot
 local cIcon = addIcon("cI",{text="Cave\nBot",switchable=false,moveable=true}, function()
@@ -142,6 +152,8 @@ macro(50,function()
   end
 end)
 
+--------------------------------------------------------------------------------------------------------------------------
+
 -- Abrir BP principal
 macro(200, "Abrir Main BP", function()
     if not getContainers()[0] and getBack() then
@@ -168,6 +180,8 @@ onKeyPress(function(keys)
         modules.game_interface.getMapPanel():lockVisibleFloor(lockedLevel)
     end
 end)
+
+--------------------------------------------------------------------------------------------------------------------------
 
 -- Turn Target Canudo
 Turn = {}
@@ -203,6 +217,8 @@ Turn.macro = macro(1, 'Turn by Ryan', function()
     end
 end)
 
+--------------------------------------------------------------------------------------------------------------------------
+
 -- Comprar Bless
 if player:getBlessings() == 0 then
     say("!bless")
@@ -213,6 +229,8 @@ if player:getBlessings() == 0 then
     end)
 end
 
+--------------------------------------------------------------------------------------------------------------------------
+
 -- Bugmap pelo mouse
 macro(20, "Bug Map - Mouse", function(m)
     --Made By VivoDibra#1182 
@@ -222,6 +240,8 @@ macro(20, "Bug Map - Mouse", function(m)
     g_game.use(tile:getTopUseThing())
 	end
 end)
+
+--------------------------------------------------------------------------------------------------------------------------
 
 -- Bugmap WASD
 local function checkPos(x, y)
