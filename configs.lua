@@ -1,9 +1,38 @@
---setDefaultTab("Others")
-UI.Separator()
+setDefaultTab("News")
 
 -- Aumentar tamanho do CaveBot List
-local size = 300
+local size = 200
 CaveBot.actionList:getParent():setHeight(size)
+
+--------------------------------------------------------------------------------------------------------------------------
+
+-- Runa no target
+UI.TextEdit(storage.runeTarget or "3150", function(widget, text)
+    storage.runeTarget = text
+end)
+macro(200, "Rune On Target", function()
+    if not g_game.isAttacking() then return end
+    if not g_game.getAttackingCreature():canShoot() then return end
+        useWith(tonumber(storage.runeTarget), g_game.getAttackingCreature())
+        delay(500)
+end)
+
+--------------------------------------------------------------------------------------------------------------------------
+
+-- Auto Loot ao dar look
+local doAutoLootLook = macro(5000, "Auto Loot on Look", function() end)
+onTextMessage(function(mode, text)
+    if mode == 20 and text:find("You see") and doAutoLootLook:isOn() then
+        local regex = [[You see (?:an|a)([a-z A-Z]*).]]
+        local data = regexMatch(text, regex)[1]
+        if data and data[2] then
+            say('!autoloot add, ' ..data[2]:trim())
+        end
+    end
+end)
+addIcon("doAutoLootLook", {item=35729, text="LOOT"}, function(icon, isOn)
+doAutoLootLook.setOn(isOn)
+end)
 
 --------------------------------------------------------------------------------------------------------------------------
 
@@ -26,11 +55,11 @@ end)
 
 --------------------------------------------------------------------------------------------------------------------------
 
--- Revide
+-- Revide PK
 local macroName = "Revidar PK" -- macro name
 local pauseTarget = true -- pause targetbot
 local pauseCave = true -- pause cavebot
-local followTarget = false -- set chase mode to follow
+local followTarget = true -- set chase mode to follow
 
 
 local st = "AutoRevide"
@@ -232,7 +261,7 @@ end
 --------------------------------------------------------------------------------------------------------------------------
 
 -- Bugmap pelo mouse
-macro(20, "Bug Map - Mouse", function(m)
+macro(10, "Bug Map - Mouse", function(m)
     --Made By VivoDibra#1182 
     local tile = getTileUnderCursor()
     if not tile then return end
