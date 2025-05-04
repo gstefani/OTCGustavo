@@ -72,7 +72,7 @@ if not string.trim then
 end
 
 -- Macro principal, roda só se o controle estiver ativo
-comboMacro = macro(100, function()
+comboMacro = macro(200, function()
     if not storage.comboMacroActive then return end
     local target = g_game.getAttackingCreature()
     if not target then return end
@@ -117,7 +117,7 @@ comboIcon:setSize({height=30, width=60})
 comboIcon.text:setFont('verdana-11px-rounded')
 
 -- Macro visual: muda a cor do texto ON/verde ou OFF/vermelho
-macro(50, function()
+macro(200, function()
   if storage.comboMacroActive then
     comboIcon.text:setColoredText({"Combo\nSpells\n","white","ON","green"})
   else

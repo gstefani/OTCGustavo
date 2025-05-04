@@ -45,7 +45,7 @@ end)
 --------------------------------------------------------------------------------------------------------------------------
 
 -- Auto Buff
-macro(100, "AutoBuff", function()
+macro(200, "AutoBuff", function()
     if hasPartyBuff() then return end
     say(storage.buffName or "Power Up")
 end)
@@ -131,7 +131,7 @@ local config = {
     spell_train = 'power down', -- spell de treino
 }
 
-macro(100, "Mana Trainer Hunt", function()
+macro(200, "Mana Trainer Hunt", function()
     if manapercent() <= config.percent_train_ml then
         if config.regen_mana_by_item then
             useWith(config.regen_mana_id_item, player)
@@ -166,7 +166,7 @@ end)
 tIcon:setSize({height=30,width=50})
 tIcon.text:setFont('verdana-11px-rounded')
 
-macro(50,function()
+macro(200,function()
   if CaveBot.isOn() then
     cIcon.text:setColoredText({"CaveBot\n","white","ON","green"})
   else
@@ -215,7 +215,7 @@ Turn = {}
 
 Turn.maxDistance = {x = 7, y = 7}
 Turn.minDistance = 1
-Turn.macro = macro(1, 'Turn by Ryan', function()
+Turn.macro = macro(100, 'Turn by Ryan', function()
     local target = g_game.getAttackingCreature()
     if target then
         local targetPos = target:getPosition()
@@ -247,7 +247,7 @@ end)
 --------------------------------------------------------------------------------------------------------------------------
 
 -- Bugmap pelo mouse
-macro(10, "Bug Map - Mouse", function(m)
+macro(50, "Bug Map - Mouse", function(m)
     --Made By VivoDibra#1182 
     local tile = getTileUnderCursor()
     if not tile then return end
@@ -272,7 +272,7 @@ local function checkPos(x, y)
 end
 
 consoleModule = modules.game_console
-macro(1, 'Bug Map - WASD', function() 
+macro(50, 'Bug Map - WASD', function() 
  if modules.corelib.g_keyboard.isKeyPressed('w') and not consoleModule:isChatEnabled() then
   checkPos(0, -5)
  elseif modules.corelib.g_keyboard.isKeyPressed('e') and not consoleModule:isChatEnabled() then
