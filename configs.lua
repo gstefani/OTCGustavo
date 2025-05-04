@@ -139,9 +139,7 @@ macro(100, "Mana Trainer Hunt", function()
             say(config.regen_mana_spell)
         end
     else
-        if not g_game.isAttacking() then
-            say(config.spell_train)
-        end
+        say(config.spell_train)
     end
 end)
 
