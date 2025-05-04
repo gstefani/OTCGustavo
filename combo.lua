@@ -135,7 +135,7 @@ end
 
 -- Input para spell de área com condições especiais
 UI.Separator()
-UI.Label("Spell de área (formato: 'nome da spell,distância'):"):setColor('yellow')
+UI.Label("Spell de area (formato: 'spell,distancia'):"):setColor('yellow')
 local areaSpellText = ""
 if storage.areaSpellData.spell ~= "" then
     areaSpellText = storage.areaSpellData.spell .. "," .. tostring(storage.areaSpellData.distance)
