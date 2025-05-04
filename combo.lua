@@ -156,3 +156,4 @@ for i = 1, _combo.spellCountPlayers do
         storage.uComboPlayers[i] = text
     end)
 end
+UI.Separator()
