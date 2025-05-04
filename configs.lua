@@ -128,7 +128,7 @@ local config = {
     regen_mana_by_item = false, -- se o teu regen de mana for por item, deixe true, se n, false
     regen_mana_id_item = 11863, -- item p regenerar mana
     percent_train_ml = 90, -- porcentagem que irá intercalar entre regenerar e treinar, < regen > train
-    spell_train = 'powerdown', -- spell de treino
+    spell_train = 'power down', -- spell de treino
 }
 
 macro(100, "Mana Trainer Hunt", function()
@@ -245,18 +245,6 @@ Turn.macro = macro(1, 'Turn by Ryan', function()
         end
     end
 end)
-
---------------------------------------------------------------------------------------------------------------------------
-
--- Comprar Bless
-if player:getBlessings() == 0 then
-    say("!bless")
-    schedule(2000, function()
-        if player:getBlessings() == 0 then
-            error("!! Blessings not bought !!")
-        end
-    end)
-end
 
 --------------------------------------------------------------------------------------------------------------------------
 
