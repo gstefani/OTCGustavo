@@ -1,4 +1,4 @@
---setDefaultTab("Cave")
+setDefaultTab("News")
 UI.Separator()
 
 local monstrosIgnorados = {

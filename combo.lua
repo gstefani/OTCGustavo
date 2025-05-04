@@ -1,4 +1,5 @@
 UI.Separator()
+setDefaultTab("News")
 local lbT = UI.Label('Combo Spells')
 lbT:setColor('orange')
 
