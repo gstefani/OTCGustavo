@@ -1,3 +1,4 @@
+setDefaultTab("News")
 UI.Separator()
 local lbT = UI.Label('Reduzir FPS');
 lbT:setColor('orange');
