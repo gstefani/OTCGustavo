@@ -64,6 +64,14 @@ local followTarget = true -- set chase mode to follow (valor inicial)
 -- Armazenamento para o estado do followTarget
 storage.followTargetState = storage.followTargetState or true
 
+-- Interface para controlar o followTarget
+UI.Label("Follow PK:"):setColor('yellow')
+local followTargetButton = UI.Button("Follow PK: " .. (storage.followTargetState and "SIM" or "NAO"))
+followTargetButton.onClick = function(widget)
+    storage.followTargetState = not storage.followTargetState
+    widget:setText("Follow PK: " .. (storage.followTargetState and "SIM" or "NAO"))
+end
+
 local st = "AutoRevide"
 storage[st] = storage[st] or {
   pausedTarget = false,
@@ -123,14 +131,6 @@ onTextMessage(function(mode, text)
   if not c then return end
   target = c:getName()
 end)
-
--- Interface para controlar o followTarget
-UI.Label("Follow PK:"):setColor('yellow')
-local followTargetButton = UI.Button("Follow PK: " .. (storage.followTargetState and "SIM" or "NAO"))
-followTargetButton.onClick = function(widget)
-    storage.followTargetState = not storage.followTargetState
-    widget:setText("Follow PK: " .. (storage.followTargetState and "SIM" or "NAO"))
-end
 UI.Separator()
 
 --------------------------------------------------------------------------------------------------------------------------
