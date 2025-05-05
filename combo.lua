@@ -11,9 +11,8 @@ local _combo = {
 storage.uCombo = storage.uCombo or {}
 storage.uComboPlayers = storage.uComboPlayers or {}
 storage.areaSpellData = storage.areaSpellData or { spell = "", distance = 2 } -- Armazena a spell de área e distância
-
--- Variável de controle do macro (ativa/desativa)
-storage.comboMacroActive = storage.comboMacroActive or false
+storage.ignorePlayersOnScreen = storage.ignorePlayersOnScreen or false -- Variável para controlar se deve ignorar players na tela
+storage.comboMacroActive = storage.comboMacroActive or false -- Variável de controle do macro (ativa/desativa)
 
 -- Função para verificar se há players visíveis na tela
 local function hasPlayersOnScreen()
@@ -90,8 +89,8 @@ comboMacro = macro(200, function()
         
         -- Verificar condições para usar a spell de área
         if storage.areaSpellData.spell ~= "" and g_game.isAttacking() then
-            -- Não usar se houver players na tela
-            if not hasPlayersOnScreen() then
+            -- Verificar se deve ignorar players ou se não há players na tela
+            if storage.ignorePlayersOnScreen or not hasPlayersOnScreen() then
                 -- Verificar distância do monstro
                 local playerPos = g_game.getLocalPlayer():getPosition()
                 local targetPos = target:getPosition()
@@ -147,6 +146,15 @@ addTextEdit("id_area_spell", areaSpellText, function(self, text)
         distance = distance
     }
 end)
+
+-- Botão para alternar ignorar players na tela
+UI.Separator()
+UI.Label("Config de Ignorar Players P/ Spell em Area:"):setColor('yellow')
+local ignorePlayersButton = UI.Button("Ignorar players: " .. (storage.ignorePlayersOnScreen and "SIM" or "NAO"))
+ignorePlayersButton.onClick = function(widget)
+    storage.ignorePlayersOnScreen = not storage.ignorePlayersOnScreen
+    widget:setText("Ignorar players: " .. (storage.ignorePlayersOnScreen and "SIM" or "NÃO"))
+end
 
 -- Inputs para spells de players
 UI.Separator()
