@@ -125,11 +125,11 @@ onTextMessage(function(mode, text)
 end)
 
 -- Interface para controlar o followTarget
-UI.Label("Configuração de Follow Target:"):setColor('yellow')
+UI.Label("Follow PK:"):setColor('yellow')
 local followTargetButton = UI.Button("Follow PK: " .. (storage.followTargetState and "SIM" or "NAO"))
 followTargetButton.onClick = function(widget)
     storage.followTargetState = not storage.followTargetState
-    widget:setText("Follow Target: " .. (storage.followTargetState and "SIM" or "NAO"))
+    widget:setText("Follow PK: " .. (storage.followTargetState and "SIM" or "NAO"))
 end
 UI.Separator()
 
