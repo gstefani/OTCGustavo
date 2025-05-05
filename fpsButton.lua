@@ -20,8 +20,6 @@ function botPrintMessage(message)
   modules.game_textmessage.displayGameMessage(message)
 end
 
-botPrintMessage("[Idle-Mode] made by: VivoDibra#1182")
-
 local function isSameMousePos(p1,p2)
   return p1.x == p2.x and p1.y == p2.y
 end
