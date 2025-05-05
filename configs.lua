@@ -193,7 +193,6 @@ local function addManaTrainerScrollBar(title, min, max, defaultValue, dest, tool
       widget.text:setText(title..value.."%")
       config.percent_train_ml = value
       storage.manaTrainer.percent = value
-      saveConfig()
   end
   widget.scroll:setRange(min, max)
   widget.scroll:setTooltip(tooltip)
