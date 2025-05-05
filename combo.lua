@@ -153,7 +153,7 @@ UI.Label("Config de Ignorar Players P/ Spell em Area:"):setColor('yellow')
 local ignorePlayersButton = UI.Button("Ignorar players: " .. (storage.ignorePlayersOnScreen and "SIM" or "NAO"))
 ignorePlayersButton.onClick = function(widget)
     storage.ignorePlayersOnScreen = not storage.ignorePlayersOnScreen
-    widget:setText("Ignorar players: " .. (storage.ignorePlayersOnScreen and "SIM" or "NÃO"))
+    widget:setText("Ignorar players: " .. (storage.ignorePlayersOnScreen and "SIM" or "NAO"))
 end
 
 -- Inputs para spells de players
