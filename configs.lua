@@ -182,11 +182,6 @@ HorizontalScrollBar
 local function saveConfig()
   storage.manaTrainer.percent = config.percent_train_ml
   storage.manaTrainer.spell = config.spell_train
-  
-  -- Debug para verificar os valores salvos
-  print("Mana Trainer - Configurações salvas:")
-  print("Porcentagem: " .. storage.manaTrainer.percent)
-  print("Spell: " .. storage.manaTrainer.spell)
 end
 
 -- Função para adicionar scrollbar personalizado
