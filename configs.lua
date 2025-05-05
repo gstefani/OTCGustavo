@@ -136,62 +136,75 @@ UI.Separator()
 --------------------------------------------------------------------------------------------------------------------------
 
 -- Mana treiner hunt
+-- Namespace dedicado para armazenamento
+if not storage.manaTrainer then
+  storage.manaTrainer = {
+      percent = 80,
+      spell = 'power down'
+  }
+end
+
 local config = {
-    regen_mana_by_spell = false, -- se o teu regen de mana for por spell, deixe true, se n, false
-    regen_mana_spell = '', -- spell p regenerar mana
-    regen_mana_by_item = false, -- se o teu regen de mana for por item, deixe true, se n, false
-    regen_mana_id_item = 11863, -- item p regenerar mana
-    percent_train_ml = 80, -- porcentagem que irá intercalar entre regenerar e treinar, < regen > train
-    spell_train = 'power down', -- spell de treino
+  regen_mana_by_spell = false, -- se o teu regen de mana for por spell, deixe true, se n, false
+  regen_mana_spell = '', -- spell p regenerar mana
+  regen_mana_by_item = false, -- se o teu regen de mana for por item, deixe true, se n, false
+  regen_mana_id_item = 11863, -- item p regenerar mana
+  percent_train_ml = storage.manaTrainer.percent, -- carrega do storage
+  spell_train = storage.manaTrainer.spell, -- carrega do storage
 }
 
 -- Carrega o widget personalizado para o scrollbar
 g_ui.loadUIFromString([[
 ManaTrainerScrollBar < Panel
-  height: 28
-  margin-top: 3
+height: 28
+margin-top: 3
 
-  UIWidget
-    id: text
-    anchors.left: parent.left
-    anchors.right: parent.right
-    anchors.top: parent.top
-    text-align: center
-    
-  HorizontalScrollBar
-    id: scroll
-    anchors.left: parent.left
-    anchors.right: parent.right
-    anchors.top: prev.bottom
-    margin-top: 3
-    minimum: 0
-    maximum: 100
-    step: 1
+UIWidget
+  id: text
+  anchors.left: parent.left
+  anchors.right: parent.right
+  anchors.top: parent.top
+  text-align: center
+  
+HorizontalScrollBar
+  id: scroll
+  anchors.left: parent.left
+  anchors.right: parent.right
+  anchors.top: prev.bottom
+  margin-top: 3
+  minimum: 1
+  maximum: 100
+  step: 1
 ]])
 
--- Função para adicionar scrollbar personalizado
-local function addManaTrainerScrollBar(id, title, min, max, defaultValue, dest, tooltip)
-    local widget = UI.createWidget("ManaTrainerScrollBar", dest)
-    widget.text:setTooltip(tooltip)
-    widget.scroll.onValueChange = function(scroll, value)
-      widget.text:setText(title..value.."%")
-      storage[id] = value
-      config.percent_train_ml = value
-    end
-    widget.scroll:setRange(min, max)
-    widget.scroll:setTooltip(tooltip)
-    widget.scroll:setValue(storage[id] or defaultValue)
-    widget.scroll.onValueChange(widget.scroll, widget.scroll:getValue())
-    return widget
+-- Função para salvar as configurações
+local function saveConfig()
+  storage.manaTrainer.percent = config.percent_train_ml
+  storage.manaTrainer.spell = config.spell_train
+  
+  -- Debug para verificar os valores salvos
+  print("Mana Trainer - Configurações salvas:")
+  print("Porcentagem: " .. storage.manaTrainer.percent)
+  print("Spell: " .. storage.manaTrainer.spell)
 end
 
--- Salvar configurações no storage para persistência
-storage.manaTrainerSpell = storage.manaTrainerSpell or config.spell_train
-storage.manaTrainerPercent = storage.manaTrainerPercent or config.percent_train_ml
-
--- Inicializar configurações a partir do storage
-config.spell_train = storage.manaTrainerSpell
-config.percent_train_ml = storage.manaTrainerPercent
+-- Função para adicionar scrollbar personalizado
+local function addManaTrainerScrollBar(title, min, max, defaultValue, dest, tooltip)
+  local widget = UI.createWidget("ManaTrainerScrollBar", dest)
+  widget.text:setTooltip(tooltip)
+  widget.scroll.onValueChange = function(scroll, value)
+      if value < 1 then value = 1 end -- Garantir valor mínimo de 1
+      widget.text:setText(title..value.."%")
+      config.percent_train_ml = value
+      storage.manaTrainer.percent = value
+      saveConfig()
+  end
+  widget.scroll:setRange(min, max)
+  widget.scroll:setTooltip(tooltip)
+  widget.scroll:setValue(defaultValue)
+  widget.text:setText(title..defaultValue.."%")
+  return widget
+end
 
 -- Interface para configuração
 UI.Separator()
@@ -200,24 +213,25 @@ UI.Label("Mana Trainer Hunt"):setColor('orange')
 -- Text Edit para a spell de treino
 UI.Label("Spell de Treino:"):setColor('yellow')
 addTextEdit("spell_train_edit", config.spell_train, function(widget, text)
-    config.spell_train = text
-    storage.manaTrainerSpell = text
+  config.spell_train = text
+  storage.manaTrainer.spell = text
+  saveConfig()
 end)
 
 -- Scroll Bar para a porcentagem de treino
-addManaTrainerScrollBar("manaTrainerPercent", "% de Mana: ", 1, 100, config.percent_train_ml, nil, "Porcentagem de mana que irá soltar a spell de treino")
+addManaTrainerScrollBar("% de Mana: ", 1, 100, config.percent_train_ml, nil, "Porcentagem de mana que irá soltar a spell de treino")
 
 -- Macro principal
 macro(200, "Mana Trainer Hunt", function()
-    if manapercent() <= config.percent_train_ml then
-        if config.regen_mana_by_item then
-            useWith(config.regen_mana_id_item, player)
-        elseif config.regen_mana_by_spell then
-            say(config.regen_mana_spell)
-        end
-    else
-        say(config.spell_train)
-    end
+  if manapercent() <= config.percent_train_ml then
+      if config.regen_mana_by_item then
+          useWith(config.regen_mana_id_item, player)
+      elseif config.regen_mana_by_spell then
+          say(config.regen_mana_spell)
+      end
+  else
+      say(config.spell_train)
+  end
 end)
 
 --------------------------------------------------------------------------------------------------------------------------
