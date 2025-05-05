@@ -7,6 +7,7 @@ CaveBot.actionList:getParent():setHeight(size)
 --------------------------------------------------------------------------------------------------------------------------
 
 -- Runa no target
+UI.Label("Runa no Target:"):setColor('yellow')
 UI.TextEdit(storage.runeTarget or "3150", function(widget, text)
     storage.runeTarget = text
 end)
