@@ -4,8 +4,8 @@ local lbT = UI.Label('Combo Spells')
 lbT:setColor('orange')
 
 local _combo = {
-    spellCount = 3, -- magias para monstros
-    spellCountPlayers = 3 -- magias para players
+    spellCount = 4, -- magias para monstros
+    spellCountPlayers = 4 -- magias para players
 }
 
 storage.uCombo = storage.uCombo or {}
