@@ -1,6 +1,6 @@
 UI.Separator()
 setDefaultTab("News")
-local lbT = UI.Label('Combo Spells')
+local lbT = UI.Label('Config Combo Spells')
 lbT:setColor('orange')
 
 local _combo = {
@@ -111,12 +111,9 @@ comboMacro = macro(200, function()
             if spell ~= "" and g_game.isAttacking() then say(spell) end
         end
     else
-        -- Combo para monstros
-        for i, spell in ipairs(storage.uCombo) do
-            if spell ~= "" and g_game.isAttacking() then say(spell) end
-        end
+        -- PRIORIDADE: Verificar condições para usar a spell de área primeiro
+        local useAreaSpell = false
         
-        -- Verificar condições para usar a spell de área
         if storage.areaSpellData.spell ~= "" and g_game.isAttacking() then
             -- Verificar se deve ignorar players ou se não há players na tela
             if storage.ignorePlayersOnScreen or not hasPlayersOnScreen() then
@@ -132,7 +129,16 @@ comboMacro = macro(200, function()
                 -- E se houver pelo menos a quantidade mínima de monstros configurada
                 if distance <= storage.areaSpellData.distance and monstersInRange >= storage.areaSpellData.monsterCount then
                     say(storage.areaSpellData.spell)
+                    useAreaSpell = true
                 end
+            end
+        end
+        
+        -- Só executa o combo normal se não usou a spell de área
+        if not useAreaSpell then
+            -- Combo para monstros
+            for i, spell in ipairs(storage.uCombo) do
+                if spell ~= "" and g_game.isAttacking() then say(spell) end
             end
         end
     end
@@ -166,7 +172,7 @@ for i = 1, _combo.spellCount do
 end
 
 -- Input para spell de área com condições especiais
-UI.Label("Spell de area (formato: 'spell,distancia,qtdMonstros')"):setColor('yellow')
+UI.Label("Spell área ('spell,distancia,qtdMonstros')"):setColor('yellow')
 local areaSpellText = ""
 if storage.areaSpellData.spell ~= "" then
     areaSpellText = storage.areaSpellData.spell .. "," .. 
