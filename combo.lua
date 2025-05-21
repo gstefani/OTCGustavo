@@ -157,7 +157,7 @@ macro(200, function()
 end)
 
 -- Inputs para spells de monstros
-UI.Label("Spells para monstros:"):setColor('orange')
+UI.Label("Spells para monstros"):setColor('orange')
 for i = 1, _combo.spellCount do
     addTextEdit("id_monstro"..i, storage.uCombo[i] or "", function(self, text)
         storage.uCombo[i] = text
@@ -165,7 +165,7 @@ for i = 1, _combo.spellCount do
 end
 
 -- Input para spell de área com condições especiais
-UI.Label("Spell de area (formato: 'spell,distancia,qtd_monstros'):"):setColor('yellow')
+UI.Label("Spell de area (formato: 'spell,distancia,qtdMonstros')"):setColor('yellow')
 local areaSpellText = ""
 if storage.areaSpellData.spell ~= "" then
     areaSpellText = storage.areaSpellData.spell .. "," .. 
@@ -182,7 +182,7 @@ addTextEdit("id_area_spell", areaSpellText, function(self, text)
 end)
 
 -- Botão para alternar ignorar players na tela
-UI.Label("Config de Ignorar Players P/ Spell em Area:"):setColor('yellow')
+UI.Label("Ignorar Players P/ Spell em Area"):setColor('yellow')
 local ignorePlayersButton = UI.Button("Ignorar players: " .. (storage.ignorePlayersOnScreen and "SIM" or "NAO"))
 ignorePlayersButton.onClick = function(widget)
     storage.ignorePlayersOnScreen = not storage.ignorePlayersOnScreen
@@ -190,10 +190,9 @@ ignorePlayersButton.onClick = function(widget)
 end
 
 -- Inputs para spells de players
-UI.Label("Spells para players:"):setColor('red')
+UI.Label("Spells para players"):setColor('red')
 for i = 1, _combo.spellCountPlayers do
     addTextEdit("id_player"..i, storage.uComboPlayers[i] or "", function(self, text)
         storage.uComboPlayers[i] = text
     end)
 end
-UI.Separator()
