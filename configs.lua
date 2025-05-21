@@ -55,7 +55,7 @@ addTextEdit("buffName", storage.buffName or "Power Up", function(widget, text)
 end)
 
 --------------------------------------------------------------------------------------------------------------------------
-
+UI.Separator()
 -- Revide PK
 local macroName = "Revidar PK" -- macro name
 local pauseTarget = true -- pause targetbot
@@ -132,7 +132,6 @@ onTextMessage(function(mode, text)
   if not c then return end
   target = c:getName()
 end)
-UI.Separator()
 
 --------------------------------------------------------------------------------------------------------------------------
 
@@ -175,7 +174,7 @@ UI.Separator()
 UI.Label("Mana Trainer Hunt"):setColor('orange')
 
 -- Text Edit para a spell e porcentagem
-UI.Label("Spell, Porcentagem:"):setColor('yellow')
+UI.Label("Spell, Porcentagem"):setColor('yellow')
 addTextEdit("spell_percent_edit", storage.manaTrainer.spellAndPercent, function(widget, text)
   local newSpell, newPercent = parseSpellAndPercent(text)
   config.spell_train = newSpell

@@ -172,7 +172,7 @@ for i = 1, _combo.spellCount do
 end
 
 -- Input para spell de área com condições especiais
-UI.Label("Spell área ('spell,distancia,qtdMonstros')"):setColor('yellow')
+UI.Label("Spell Area\nSpell,Distancia,QtdMonstros"):setColor('yellow')
 local areaSpellText = ""
 if storage.areaSpellData.spell ~= "" then
     areaSpellText = storage.areaSpellData.spell .. "," .. 
