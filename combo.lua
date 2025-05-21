@@ -1,5 +1,4 @@
 UI.Separator()
-setDefaultTab("News")
 local lbT = UI.Label('Combo Spells')
 lbT:setColor('orange')
 
@@ -10,9 +9,9 @@ local _combo = {
 
 storage.uCombo = storage.uCombo or {}
 storage.uComboPlayers = storage.uComboPlayers or {}
-storage.areaSpellData = storage.areaSpellData or { spell = "", distance = 2 } -- Armazena a spell de área e distância
-storage.ignorePlayersOnScreen = storage.ignorePlayersOnScreen or false -- Variável para controlar se deve ignorar players na tela
-storage.comboMacroActive = storage.comboMacroActive or false -- Variável de controle do macro (ativa/desativa)
+storage.areaSpellData = storage.areaSpellData or { spell = "", distance = 2, monsterCount = 1 } -- Adicionado monsterCount
+storage.ignorePlayersOnScreen = storage.ignorePlayersOnScreen or false
+storage.comboMacroActive = storage.comboMacroActive or false
 
 -- Função para verificar se há players visíveis na tela
 local function hasPlayersOnScreen()
@@ -30,25 +29,54 @@ local function getDistance(p1, p2)
     return math.max(math.abs(p1.x - p2.x), math.abs(p1.y - p2.y))
 end
 
--- Função para extrair a spell e a distância da entrada do usuário
+-- Função para contar monstros dentro da distância especificada
+local function countMonstersInRange(distance)
+    local count = 0
+    local playerPos = g_game.getLocalPlayer():getPosition()
+    local spectators = g_map.getSpectators(pos(), false)
+    
+    for _, creature in ipairs(spectators) do
+        if creature:isMonster() then
+            local creaturePos = creature:getPosition()
+            local creatureDistance = getDistance(playerPos, creaturePos)
+            
+            if creatureDistance <= distance then
+                count = count + 1
+            end
+        end
+    end
+    
+    return count
+end
+
+-- Função para extrair a spell, a distância e a quantidade mínima de monstros da entrada do usuário
 local function parseAreaSpellInput(input)
     local spell = ""
     local distance = 2 -- valor padrão
+    local monsterCount = 1 -- valor padrão
     
     -- Separar a string pela vírgula
     local parts = string.split(input, ",")
     if #parts >= 1 then
         spell = parts[1]:trim() -- Remove espaços extras
         if #parts >= 2 then
-            -- Tenta converter o segundo valor para número
+            -- Tenta converter o segundo valor para número (distância)
             local distVal = tonumber(parts[2]:trim())
             if distVal and distVal > 0 then
                 distance = distVal
             end
+            
+            if #parts >= 3 then
+                -- Tenta converter o terceiro valor para número (quantidade de monstros)
+                local countVal = tonumber(parts[3]:trim())
+                if countVal and countVal > 0 then
+                    monsterCount = countVal
+                end
+            end
         end
     end
     
-    return spell, distance
+    return spell, distance, monsterCount
 end
 
 -- Adicionar a função split se não existir
@@ -96,8 +124,12 @@ comboMacro = macro(200, function()
                 local targetPos = target:getPosition()
                 local distance = getDistance(playerPos, targetPos)
                 
+                -- Contar monstros dentro da distância configurada
+                local monstersInRange = countMonstersInRange(storage.areaSpellData.distance)
+                
                 -- Usar spell de área se o monstro estiver dentro da distância configurada
-                if distance <= storage.areaSpellData.distance then
+                -- E se houver pelo menos a quantidade mínima de monstros configurada
+                if distance <= storage.areaSpellData.distance and monstersInRange >= storage.areaSpellData.monsterCount then
                     say(storage.areaSpellData.spell)
                 end
             end
@@ -133,16 +165,19 @@ for i = 1, _combo.spellCount do
 end
 
 -- Input para spell de área com condições especiais
-UI.Label("Spell de area (formato: 'spell,distancia'):"):setColor('yellow')
+UI.Label("Spell de area (formato: 'spell,distancia,qtd_monstros'):"):setColor('yellow')
 local areaSpellText = ""
 if storage.areaSpellData.spell ~= "" then
-    areaSpellText = storage.areaSpellData.spell .. "," .. tostring(storage.areaSpellData.distance)
+    areaSpellText = storage.areaSpellData.spell .. "," .. 
+                   tostring(storage.areaSpellData.distance) .. "," ..
+                   tostring(storage.areaSpellData.monsterCount)
 end
 addTextEdit("id_area_spell", areaSpellText, function(self, text)
-    local spell, distance = parseAreaSpellInput(text)
+    local spell, distance, monsterCount = parseAreaSpellInput(text)
     storage.areaSpellData = {
         spell = spell,
-        distance = distance
+        distance = distance,
+        monsterCount = monsterCount
     }
 end)
 
