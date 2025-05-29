@@ -6,6 +6,19 @@ CaveBot.actionList:getParent():setHeight(size)
 
 --------------------------------------------------------------------------------------------------------------------------
 
+-- Smart Walk Hunt
+macro(200, "Hunt Walk Smarter", function()
+    if g_game:isAttacking() then
+        CaveBot.Config.values["walkDelay"] = 80
+        CaveBot.save()
+    else
+        CaveBot.Config.values["walkDelay"] = 10
+        CaveBot.save()
+    end
+end)
+
+--------------------------------------------------------------------------------------------------------------------------
+
 -- Runa no target
 UI.Label("Runa no Target:"):setColor('yellow')
 UI.TextEdit(storage.runeTarget or "3150", function(widget, text)
