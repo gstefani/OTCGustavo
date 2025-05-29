@@ -3,7 +3,7 @@ local lbT = UI.Label('Reduzir FPS');
 lbT:setColor('orange');
 
 ------------------------------------------------------
-local secondsToIdle = 120
+local secondsToIdle = 30
 local activeFPS =  150
 ---------------------------------------------------------
 
